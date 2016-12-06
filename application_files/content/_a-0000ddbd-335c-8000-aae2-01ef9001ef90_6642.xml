@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>issueSummary</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6642</uuid>
+        <description>Summary of issue</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5372</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!awardCheckbox,&#xD;
+  local!action,&#xD;
+  local!id: ri!issue_CDT.issueID,&#xD;
+  local!date:today(),&#xD;
+  ri!federalAgency: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5874&quot;(&#xD;
+    ri!issue_CDT.federalAgency&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Hi Caseworker &quot; &amp; ri!issue_CDT.caseworker,&#xD;
+    instructions: &quot;Please respond to this issue appropriately&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Constituent Information&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(&#xD;
+            label: &quot;SSN:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.constituentInfo.constituentSSN,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.constituentInfo.email,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Issue Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+            label: &quot;Issued On:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.issueDate,&#xD;
+            saveInto: {},&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(&#xD;
+            label: &quot;Issue ID:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.issueID,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+          ,&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Issue Status:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.status,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Priority (Flag):&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(isnull(ri!issue_CDT.flag),&quot;NA&quot;,index(#&quot;_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7407&quot;,(ri!issue_CDT.flag+1))),&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Summary:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.summary,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+            label: &quot;Transcript&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            helptooltip: &quot;Click on ID to download communication transcript&quot;,&#xD;
+            links: {&#xD;
+              if(isnull(ri!issue_CDT.attachment),{},&#xD;
+              #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(&#xD;
+                label: &quot;issue ID&quot;,&#xD;
+                Document: /*ri!issue_CDT.attachment*/&#xD;
+                todocument((ri!issue_CDT.attachment+1))&#xD;
+              )&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Federal Agency Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Name:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.name,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.email,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Phone:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.phone,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      )},&#xD;
+    &#xD;
+    validations: {}&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>federalAgency</name>
+            <type>
+                <name>Agency_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>issue_CDT</name>
+            <type>
+                <name>Issue_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>filterFlagByAgency</name>
+        <uuid>_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7389</uuid>
+        <description>Group number of issues by flag</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_queryEntity&quot;(&#xD;
+  entity:#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6260&quot;,&#xD;
+  query:#&quot;SYSTEM_SYSRULES_query&quot;(&#xD;
+    selection:#&quot;SYSTEM_SYSRULES_querySelection&quot;(&#xD;
+      columns:{&#xD;
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(&#xD;
+        field:&quot;flag&quot;&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    logicalExpression:#&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(&#xD;
+      operator:&quot;AND&quot;,&#xD;
+      filters:{&#xD;
+        #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+          field:&quot;flag&quot;,&#xD;
+          operator:&quot;=&quot;,&#xD;
+          value:if(isnull(ri!flag),6,ri!flag)&#xD;
+        ),&#xD;
+        #&quot;SYSTEM_SYSRULES_queryFilter&quot;(&#xD;
+          field:&quot;federalAgency&quot;,&#xD;
+          operator:&quot;=&quot;,&#xD;
+          value:if(isnull(ri!agency),&quot;a&quot;,ri!agency)&#xD;
+        )&#xD;
+      }&#xD;
+      &#xD;
+    ),&#xD;
+    pagingInfo:#&quot;SYSTEM_SYSRULES_pagingInfo&quot;(&#xD;
+      startIndex:1,&#xD;
+      batchSize:-1&#xD;
+    )&#xD;
+  )&#xD;
+).totalCount</definition>
+        <namedTypedValue>
+            <name>agency</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>flag</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<tempoReportHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <tempoReport name="Analysis of Issues and Caseworkers" a:uuid="c964bbb3-0727-467e-8caf-ab05a430acb7">
+        <a:description>Analysis of Issues and Caseworkers</a:description>
+        <a:uiExpr>=#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6848&quot;()</a:uiExpr>
+        <a:urlStub>jjNASA</a:urlStub>
+    </tempoReport>
+    <roleMap>
+        <role name="report_administrator">
+            <users>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role name="report_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</tempoReportHaul>

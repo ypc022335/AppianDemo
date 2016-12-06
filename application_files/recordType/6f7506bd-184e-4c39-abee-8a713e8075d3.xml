@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Issue Status" a:uuid="6f7506bd-184e-4c39-abee-8a713e8075d3">
+        <a:pluralName>Issue Status</a:pluralName>
+        <a:description>Issues in district</a:description>
+        <a:urlStub>RwpHUQ</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="3441a47c-0768-435a-b37d-39e305a2b7b6@_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5488"/>
+        <a:listViewTemplateExpr>#&quot;SYSTEM_SYSRULES_recordGridLayoutColumns&quot;(
+  emptygridmessage: &quot;There is no data available.&quot;,
+  columns: {
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;IssueID&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_linkField&quot;(
+        links: #&quot;SYSTEM_SYSRULES_recordLink&quot;(&#xD;
+          label: rf!issueID,&#xD;
+          recordType: rp!type,&#xD;
+          identifier: rp!id&#xD;
+        )&#xD;
+&#xD;
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Summary&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!summary
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Constituent Name&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!constituentInfo.firstName&amp;&quot; &quot;&amp;rf!constituentInfo.lastName
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Status&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!status
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Flag&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: if(isnull(rf!flag),&quot;NA&quot;,index(#&quot;_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7407&quot;,(rf!flag+1)))
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Duration&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_integerField&quot;(
+        displayvalue: if(isnull(rf!closureDate),if(networkdays(rf!issueDate,today())&gt;0,networkdays(rf!issueDate,today()),0),networkdays(rf!issueDate,rf!closureDate))
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Federal agency&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6424&quot;(rf!federalAgency))
+    )
+  },
+  pageSize: 50,
+  defaultSort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+    field: &quot;status&quot;,
+    ascending: false
+  )
+)</a:listViewTemplateExpr>
+        <a:fieldCfg name="By Status">
+            <a:description></a:description>
+            <a:sourceRef>status</a:sourceRef>
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetLabelExpr>=&quot;status&quot;</a:facetLabelExpr>
+            <a:facetOption>
+                <a:labelExpr>&quot;New&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;New&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Closed&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;Closed&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Pending&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;Pending&quot;</a:values>
+            </a:facetOption>
+            <a:sortOrderIndex>0</a:sortOrderIndex>
+            <a:facetOrderIndex>0</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:fieldCfg name="By Flag">
+            <a:description></a:description>
+            <a:sourceRef>flag</a:sourceRef>
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetLabelExpr>=&quot;flag&quot;</a:facetLabelExpr>
+            <a:facetOption>
+                <a:labelExpr>&quot;Low&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>1</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Medium&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>2</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;High&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>3</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Immediate&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>4</a:values>
+            </a:facetOption>
+            <a:sortOrderIndex>1</a:sortOrderIndex>
+            <a:facetOrderIndex>1</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:fieldCfg name="By Agency">
+            <a:description></a:description>
+            <a:sourceRef>federalAgency</a:sourceRef>
+            <a:isSortable>false</a:isSortable>
+            <a:isSearchable>false</a:isSearchable>
+            <a:isFacet>true</a:isFacet>
+            <a:facetType>CUSTOM_BUCKETS_CLOSED</a:facetType>
+            <a:isExclusiveFacet>true</a:isExclusiveFacet>
+            <a:facetLabelExpr>=&quot;federalAgency&quot;</a:facetLabelExpr>
+            <a:facetOption>
+                <a:labelExpr>&quot;Public Utilities Commission&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;consumer-affairs@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Aging&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-aging@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Arts Resources&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-arts@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Biodiversity&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-biodiversity@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Child Support Services&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-arts@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Child Support Services&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-childsupport@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Managed Healthcare&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-healthcare@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Insurance&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-insurance@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Transportation&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-transportation@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:facetOption>
+                <a:labelExpr>&quot;Dept. of Water Resources&quot;</a:labelExpr>
+                <a:facetOperator>IN</a:facetOperator>
+                <a:lowerLimitExpr></a:lowerLimitExpr>
+                <a:upperLimitExpr></a:upperLimitExpr>
+                <a:values>&quot;dept-of-water@cpuc.ca.gov&quot;</a:values>
+            </a:facetOption>
+            <a:sortOrderIndex>2</a:sortOrderIndex>
+            <a:facetOrderIndex>2</a:facetOrderIndex>
+            <a:visibilityExpr></a:visibilityExpr>
+            <a:defaultOptionExpr></a:defaultOptionExpr>
+        </a:fieldCfg>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr>#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6642&quot;(#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5874&quot;(rf!federalAgency),#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6117&quot;(rf!issueID))</a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+            <a:relatedActionCfg>26728669-2209-4058-9970-7d4ab2eacb11</a:relatedActionCfg>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>constituentInfo.district</a:field>
+            <a:operator>not null</a:operator>
+            <a:valueExpression></a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultFilter>
+            <a:field>constituentInfo.district</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>user(fn!loggedInUser(),&quot;city&quot;)</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultFilter>
+            <a:field>flag</a:field>
+            <a:operator>not null</a:operator>
+            <a:valueExpression></a:valueExpression>
+        </a:defaultFilter>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002ddc6-c67f-8000-aae2-014d98014d98"/>
+            <a:contextExpr>{issueID:rf!issueID}</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>26728669-2209-4058-9970-7d4ab2eacb11</a:refId>
+        </a:relatedActionCfg>
+        <a:relatedActionCfg>
+            <a:target xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:ProcessModel" a:uuid="0002ddca-6ac7-8000-aae2-014d98014d98"/>
+            <a:contextExpr>{processVar1:&quot;hii&quot;}</a:contextExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:refId>1440aa62-d2f1-49eb-aed8-27ade6966ef5</a:refId>
+        </a:relatedActionCfg>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:titleExpr></a:titleExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:layoutType>GRID</a:layoutType>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users>
+                <userUuid>ShrutiK</userUuid>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role name="record_type_viewer">
+            <users>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_70</groupUuid>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_editor">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_70</groupUuid>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+        <role name="record_type_auditor">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_70</groupUuid>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

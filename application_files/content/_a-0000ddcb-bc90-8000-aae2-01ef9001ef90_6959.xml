@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>fetchFlagForReport_CC</name>
+        <uuid>_a-0000ddcb-bc90-8000-aae2-01ef9001ef90_6959</uuid>
+        <description>Fetch flag value</description>
+        <folderUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</folderUuid>
+        <dataStoreEntityCompositeUuid>3441a47c-0768-435a-b37d-39e305a2b7b6@_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5488</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>flag</name>
+                <type>{http://www.w3.org/2001/XMLSchema}int</type>
+            </param>
+            <param>
+                <description></description>
+                <name>caseworker</name>
+                <type>{http://www.w3.org/2001/XMLSchema}string</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>caseworker</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}string</type>
+                </field>
+                <op>=</op>
+                <value>caseworker</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+            <filter>
+                <field>
+                    <name>flag</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>=</op>
+                <value>flag</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

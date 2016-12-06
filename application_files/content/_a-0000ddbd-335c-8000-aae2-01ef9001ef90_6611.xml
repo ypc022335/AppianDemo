@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>caseworkerPie1</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6611</uuid>
+        <description></description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>/*load(
+  local!pagingInfo: a!pagingInfo(
+    startIndex: 1,
+    batchSize: -1,
+    sort: a!sortInfo(
+      field: &quot;federalAgency&quot;,
+      ascending: true
+    )
+  ),
+  with(
+    local!datasubset: queryrecord(
+      cons!ISSUE_STATUS,
+      a!query(
+        aggregation: a!queryAggregation(aggregationColumns: {
+          a!queryAggregationColumn(field: &quot;federalAgency&quot;, isGrouping: true),
+          a!queryAggregationColumn(field: &quot;flag&quot;, aggregationFunction: &quot;COUNT&quot;),
+          a!queryAggregationColumn(field: &quot;issueID&quot;, aggregationFunction: &quot;COUNT&quot;),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    a!barChartField(
+      categories: {
+        apply(
+                  rule!fetchAgencyName,
+                  index(
+                    local!datasubset.data,
+                    &quot;federalAgency&quot;,
+                    null
+                  )
+                )
+      },
+      series: {
+        
+        a!chartSeries(label:&quot;Closed&quot;,data:apply(rule!filterFlagByAgency(_,_),merge(index(local!datasubset.data,&quot;federalAgency&quot;,null),{repeat(length(index(local!datasubset.data,&quot;federalAgency&quot;,null)),0)}))),
+        a!chartSeries(label:&quot;Low&quot;,data:apply(rule!filterFlagByAgency(_,_),merge(index(local!datasubset.data,&quot;federalAgency&quot;,null),{repeat(length(index(local!datasubset.data,&quot;federalAgency&quot;,null)),1)}))),
+        a!chartSeries(label:&quot;Medium&quot;,data:apply(rule!filterFlagByAgency(_,_),merge(index(local!datasubset.data,&quot;federalAgency&quot;,null),{repeat(length(index(local!datasubset.data,&quot;federalAgency&quot;,null)),2)}))),
+        a!chartSeries(label:&quot;High&quot;,data:apply(rule!filterFlagByAgency(_,_),merge(index(local!datasubset.data,&quot;federalAgency&quot;,null),{repeat(length(index(local!datasubset.data,&quot;federalAgency&quot;,null)),3)}))),
+        a!chartSeries(label:&quot;Immediate&quot;,data:apply(rule!filterFlagByAgency(_,_),merge(index(local!datasubset.data,&quot;federalAgency&quot;,null),{repeat(length(index(local!datasubset.data,&quot;federalAgency&quot;,null)),4)})))
+              
+      }
+    )
+  )
+)
+*/
+#&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label: &quot;Caseworker overview&quot;,
+      firstColumnContents: {
+        load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: - 1,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          with(
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+                  aggregationColumns: {
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;issueID&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;caseworker&quot;,
+                      isGrouping: true
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_pieChartField&quot;(
+              label: &quot;Performance (w.r.t. cases solved)&quot;,
+              series: {
+                apply(
+                  #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+                    label: _,
+                    data: _
+                  ),
+                  merge(
+                    merge(apply(
+                      fn!user,
+                      index(
+                        local!datasubset.data,
+                        &quot;caseworker&quot;,
+                        null
+                      ),
+                      &quot;firstName&quot;
+                    ),index(
+                      local!datasubset.data,
+                      &quot;issueID&quot;,
+                      null
+                    )),
+                    index(
+                      local!datasubset.data,
+                      &quot;issueID&quot;,
+                      null
+                    )
+                  )
+                )
+              }
+            )
+          )
+        )
+      },
+      secondColumnContents: {
+       load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: - 1,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          
+          with(
+            
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6915&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+                  aggregationColumns: {
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;issueID&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;flag&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                      
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;caseworker&quot;,
+                      isGrouping: true
+                      
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+              label: &quot;Performance (w.r.t. case priority)&quot;,
+              categories: {
+                apply(
+                  fn!user,
+                  index(
+                    local!datasubset.data,
+                    &quot;caseworker&quot;,
+                    null
+                  ),
+                  &quot;firstName&quot;
+                )
+              },
+              
+              series: {
+                /*a!chartSeries(
+                  label: &quot;No. of Issues&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;&quot;,
+                    null
+                  )
+                )*/
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Closed&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),0)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Low&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),1)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Medium&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),2)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;High&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),3)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Immediate&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),4)})))
+              },
+              
+            xAxisTitle: &quot;Department&quot;,
+            yAxisTitle: &quot;Total Purchase Requests&quot;,
+            stacking: &quot;NORMAL&quot;,
+            showLegend: true,
+            showTooltips: true
+            )
+          )
+          
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label: &quot;Case Overview&quot;,
+      firstColumnContents: {
+        load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: - 1,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          with(
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+                  aggregationColumns: {
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;issueID&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;federalAgency&quot;,
+                      isGrouping: true
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;status&quot;,
+                      isGrouping: true
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_barChartField&quot;(
+              label: &quot;Agency VS No. of Issues&quot;,
+              categories: {
+                apply(
+                  #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6424&quot;,
+                  index(
+                    local!datasubset.data,
+                    &quot;federalAgency&quot;,
+                    null
+                  )
+                )
+              },
+              series: {
+                #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+                  label: &quot;No. of issues&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;issueID&quot;,
+                    null
+                  )
+                )
+              }
+            )
+          )
+        )
+      },
+      secondColumnContents: {
+        load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: - 1,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          with(
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6915&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+                  aggregationColumns: {
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;issueID&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;status&quot;,
+                      isGrouping: true
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_pieChartField&quot;(
+              label: &quot;Status of individual cases&quot;,
+              series: {
+                apply(
+                  #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+                    label: _,
+                    data: _
+                  ),
+                  merge(
+                    merge(index(
+                      local!datasubset.data,
+                      &quot;status&quot;,
+                      null
+                    ),index(
+                      local!datasubset.data,
+                      &quot;issueID&quot;,
+                      null
+                    )),
+                    index(
+                      local!datasubset.data,
+                      &quot;issueID&quot;,
+                      null
+                    )
+                  )
+                )
+              }
+            )
+          )
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label: &quot;List of Issues&quot;,
+      firstColumnContents: {
+        load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: 20,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          with(
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6915&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(
+                  columns: {
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;issueID&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;summary&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;federalAgency&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;caseworker&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;flag&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+                      field: &quot;status&quot;
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_gridField&quot;(
+              totalCount: local!datasubset.totalCount,
+              columns: {
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Issue ID&quot;,
+                  field: &quot;issueID&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;issueID&quot;,
+                    null
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Summary&quot;,
+                  field: &quot;summary&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;summary&quot;,
+                    null
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Federal Agency Name&quot;,
+                  field: &quot;federalAgency&quot;,
+                  data: apply(
+                    #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6424&quot;,
+                    index(
+                      local!datasubset.data,
+                      &quot;federalAgency&quot;,
+                      null
+                    )
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Caseworker&quot;,
+                  field: &quot;caseworker&quot;,
+                  data: apply(
+                    fn!user,
+                    index(
+                      local!datasubset.data,
+                      &quot;caseworker&quot;,
+                      null
+                    ),
+                    &quot;firstName&quot;
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Flag&quot;,
+                  field: &quot;flag&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;flag&quot;,
+                    null
+                  )
+                ),
+                #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+                  label: &quot;Status&quot;,
+                  field: &quot;status&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;status&quot;,
+                    null
+                  )
+                )
+              },
+              value: local!pagingInfo,
+              saveInto: local!pagingInfo
+            )
+          )
+        )
+      }
+    )
+  }
+)
+
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

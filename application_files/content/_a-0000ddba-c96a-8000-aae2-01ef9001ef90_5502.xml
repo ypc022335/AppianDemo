@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>tryouts</name>
+        <uuid>_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5502</uuid>
+        <description>trying different rules</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>/*a!queryEntity(
+  entity:cons!DATASTORE_CC,
+  query:a!query(
+    selection:a!querySelection(
+      columns:{
+        a!queryColumn(
+        field:&quot;firstName&quot;
+        ),
+        a!queryColumn(
+        field:&quot;lastName&quot;
+      )
+      }
+    ),
+    logicalExpression:a!queryLogicalExpression(
+      operator:&quot;AND&quot;,
+      filters:{
+        a!queryFilter(
+          field:&quot;district&quot;,
+          operator:&quot;=&quot;,
+          value:ri!district
+        ),
+        a!queryFilter(
+          field:&quot;state&quot;,
+          operator:&quot;=&quot;,
+          value:ri!state
+        )
+      }
+      
+    ),
+    pagingInfo:a!pagingInfo(
+      startIndex:1,
+      batchSize:-1
+    )
+  )
+)
+if(
+  not(isnull(&quot;ri of ssn&quot;)),
+if(
+  length(rule!getConstituentDetails(123456789))=1,rule!getConstituentDetails(123456789).firstName,&quot;ri&quot;
+),
+{}
+)
+
+
+
+rule!filterFlag(1,&quot;teresa_lisbon&quot;).totalCount*/
+/*length({1,2,3})*/
+/*rule!fetchFaqWithId_CC(faqId).answer_txt*/
+/*rule!fetchFaq_CC()*/
+/*with(
+  local!addDay : 0,
+repeat(ri!noOfDays,caladddays(&quot;11/14/2016&quot;,local!day))
+)*/
+
+apply(caladddays(_,_),merge(repeat(5,today()),{1,2,3,4,5}))</definition>
+        <namedTypedValue>
+            <name>state</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>district</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>faqId</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>noOfDays</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

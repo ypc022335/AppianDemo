@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_responseFromAdmin</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5616</uuid>
+        <description>Answer given by Admin </description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+  label: &quot;Hi, User&quot;,&#xD;
+  instructions: &quot;Response to the query&quot;,&#xD;
+  firstColumnContents: {&#xD;
+    #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+      label: &quot;Question:&quot;,&#xD;
+      labelPosition: &quot;ABOVE&quot;,&#xD;
+      value: ri!question_txt,&#xD;
+      saveInto: {},&#xD;
+      refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+      readonly: true,&#xD;
+      validations: {}&#xD;
+    ),&#xD;
+    #&quot;SYSTEM_SYSRULES_paragraphField&quot;(&#xD;
+      label: &quot;Answer:&quot;,&#xD;
+      labelPosition: &quot;ABOVE&quot;,&#xD;
+      value: ri!answer_txt,&#xD;
+      refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+      readOnly:true,&#xD;
+      height: &quot;MEDIUM&quot;,&#xD;
+      validations: {}&#xD;
+    )&#xD;
+  },&#xD;
+  secondColumnContents: {&#xD;
+    /* Add components here for a two-column form */&#xD;
+  },&#xD;
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+    primaryButtons: {&#xD;
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+        label: &quot;Cancel&quot;,&#xD;
+        style: &quot;NORMAL&quot;,&#xD;
+        saveInto: {}&#xD;
+      )&#xD;
+    }&#xD;
+  ),&#xD;
+  validations: {}&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>question_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>answer_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>question_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>answer_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>

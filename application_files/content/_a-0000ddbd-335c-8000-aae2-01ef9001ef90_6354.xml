@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>issueAnalysis1</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6354</uuid>
+        <description></description>
+        <parentUuid>_a-0000dd72-6187-8000-aae2-01ef9001ef90_3672</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: -1,
+    sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+      field: &quot;issueID&quot;,
+      ascending: true
+    )
+  ),
+  with(
+    local!datasubset: queryrecord(
+      #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+      #&quot;SYSTEM_SYSRULES_query&quot;(
+        aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(aggregationColumns: {
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;issueID&quot;, aggregationFunction: &quot;COUNT&quot;),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;issueDate&quot;, isGrouping: true),
+          #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(field: &quot;closureDate&quot;, isGrouping: true),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+      categories: {
+        networkdays(index(local!datasubset.data, &quot;issueDate&quot;, null),index(local!datasubset.data, &quot;closureDate&quot;, null))
+      },
+      series: {
+        #&quot;SYSTEM_SYSRULES_chartSeries&quot;(
+          label: &quot;No. of days&quot;,
+          data: index(local!datasubset.data, &quot;issueID&quot;, null)
+        )
+      }
+    )
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

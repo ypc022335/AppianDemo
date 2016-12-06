@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<groupHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <group>
+        <name>Districts</name>
+        <securityMap>SECURITYMAP_PUBLIC</securityMap>
+        <uuid>_e-0000ddba-c186-8000-aae2-011e94011e94_80</uuid>
+        <groupTypeUuid>SYSTEM_GROUP_TYPE_CUSTOM</groupTypeUuid>
+        <description></description>
+        <delegatedCreation>false</delegatedCreation>
+        <memberPolicy>MEMBERPOLICY_CLOSED</memberPolicy>
+        <viewingPolicy>VIEWINGPOLICY_LOW</viewingPolicy>
+        <attributes/>
+    </group>
+    <members>
+        <users/>
+        <groups>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_91</groupUuid>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_90</groupUuid>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_89</groupUuid>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_88</groupUuid>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_87</groupUuid>
+            <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_86</groupUuid>
+        </groups>
+    </members>
+    <admins>
+        <users>
+            <userUuid>ShrutiK</userUuid>
+        </users>
+        <groups/>
+    </admins>
+    <ruleSet/>
+</groupHaul>

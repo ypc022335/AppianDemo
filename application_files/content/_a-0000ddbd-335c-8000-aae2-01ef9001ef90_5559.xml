@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_answerFromAdam</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5559</uuid>
+        <description>Response to questions asked by user from Adam.</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=#&quot;SYSTEM_SYSRULES_formLayout&quot;(
+  label: &quot;&quot;,
+  instructions: &quot;&quot;,
+  firstColumnContents: {
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      secondColumnContents: {
+        #&quot;SYSTEM_SYSRULES_imageField&quot;(
+          label: &quot;&quot;,
+          labelPosition: &quot;ABOVE&quot;,
+          images: {
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+              document: 6579
+            )
+          },
+          size: &quot;SMALL&quot;
+        )
+      }
+    ),
+    #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+      label:&quot; Respond to Question&quot;,
+      firstColumnContents :{
+    #&quot;SYSTEM_SYSRULES_textField&quot;(
+      label: &quot;Question:&quot;,
+      labelPosition: &quot;ABOVE&quot;,
+      value: ri!question_txt,
+      saveInto: {},
+      refreshAfter: &quot;UNFOCUS&quot;,
+      readonly: true,
+      validations: {}
+    ),
+    #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+      label: &quot;Answer:&quot;,
+      labelPosition: &quot;ABOVE&quot;,
+      value:ri!answer_txt,
+      saveInto: ri!answer_txt,
+      refreshAfter: &quot;UNFOCUS&quot;,
+      height: &quot;MEDIUM&quot;,
+      validations: {},
+      required:true
+    ),
+    #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+      choiceLabels: {&quot;Add this question to FAQ&quot;},
+      choiceValues: {&quot;Add&quot;},
+      value: ri!addToFaq_txt,
+      saveInto: ri!addToFaq_txt
+    )})
+  },
+  secondColumnContents: {
+    /* Add components here for a two-column form */
+  },
+  buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+    primaryButtons: {
+      #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+        label: &quot;Respond&quot;,
+        style: &quot;PRIMARY&quot;,
+        saveInto: a!save(ri!faq_cdt.answer_txt, ri!answer_txt)
+        
+      )
+    },
+    secondaryButtons: {
+      
+    }
+  ),
+  validations: {}
+)</definition>
+        <namedTypedValue>
+            <name>question_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>answer_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>faq_cdt</name>
+            <type>
+                <name>Faq_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>addToFaq_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>question_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>answer_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Faq_CC"/>
+                    <a:nameRef>faq_cdt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>addToFaq_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>

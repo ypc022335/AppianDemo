@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>caseworkerPie</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6259</uuid>
+        <description>Pie Chart for caseworker comparison</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5372</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+          local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+            startIndex: 1,
+            batchSize: - 1,
+            sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+              field: &quot;issueID&quot;,
+              ascending: true
+            )
+          ),
+          
+          with(
+            
+            local!datasubset: queryrecord(
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6915&quot;,
+              #&quot;SYSTEM_SYSRULES_query&quot;(
+                aggregation: #&quot;SYSTEM_SYSRULES_queryAggregation&quot;(
+                  aggregationColumns: {
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;issueID&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;flag&quot;,
+                      aggregationFunction: &quot;COUNT&quot;
+                      
+                    ),
+                    #&quot;SYSTEM_SYSRULES_queryAggregationColumn&quot;(
+                      field: &quot;caseworker&quot;,
+                      isGrouping: true
+                      
+                    ),
+                    
+                  }
+                ),
+                pagingInfo: local!pagingInfo
+              )
+            ),
+            #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+              label: &quot;Performance (w.r.t. case priority)&quot;,
+              categories: {
+                apply(
+                  fn!user,
+                  index(
+                    local!datasubset.data,
+                    &quot;caseworker&quot;,
+                    null
+                  ),
+                  &quot;firstName&quot;
+                )
+              },
+              
+              series: {
+                /*a!chartSeries(
+                  label: &quot;No. of Issues&quot;,
+                  data: index(
+                    local!datasubset.data,
+                    &quot;&quot;,
+                    null
+                  )
+                )*/
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Closed&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),0)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Low&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),1)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Medium&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),2)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;High&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),3)}))),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label:&quot;Immediate&quot;,data:apply(#&quot;_a-0000ddcb-ed10-8000-aae2-01ef9001ef90_6984&quot;(_,_),merge(index(local!datasubset.data,&quot;caseworker&quot;,null),{repeat(length(index(local!datasubset.data,&quot;caseworker&quot;,null)),4)})))
+              },
+              
+            xAxisTitle: &quot;Department&quot;,
+            yAxisTitle: &quot;Total Purchase Requests&quot;,
+            stacking: &quot;NORMAL&quot;,
+            showLegend: true,
+            showTooltips: true
+            )
+          )
+          
+        )
+      
+      length()</definition>
+        <namedTypedValue>
+            <name>cancel</name>
+            <type>
+                <name>boolean</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>true</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

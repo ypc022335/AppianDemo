@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_askAdam</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5524</uuid>
+        <description>Adam : FAQs + Other questions submission</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>with(
+  local!choice: ri!questionNumber_int,
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: &quot;Troubleshooting Portal : Ask Admin&quot;,
+    instructions: &quot;&quot;,
+    firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+        label: &quot;FAQs:&quot;,
+        labelPosition: &quot;ABOVE&quot;,
+        choiceLabels: append(
+          #&quot;_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7381&quot;().question_txt,
+          &quot;Other&quot;
+        ),
+        choiceValues: append(
+          #&quot;_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7381&quot;().faqId_int,
+          - 1
+        ),
+        saveInto: ri!questionNumber_int,
+        choiceLayout: &quot;STACKED&quot;,
+        validations: {}
+      ),
+      if(
+        isnull(
+          local!choice
+        ),
+        {},
+        if(
+          local!choice = - 1,
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Type Question here:&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            value: ri!faq_cdt.question_txt,
+            saveInto: ri!faq_cdt.question_txt,
+            refreshAfter: &quot;UNFOCUS&quot;,
+            height: &quot;MEDIUM&quot;,
+            required: true
+          ),
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+            label: &quot;Answer:&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            value: #&quot;_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7400&quot;(
+              ri!questionNumber_int
+            ).answer_txt,
+            readOnly: true,
+            refreshAfter: &quot;UNFOCUS&quot;,
+            height: &quot;MEDIUM&quot;
+          )
+        )
+      )
+    },
+    secondColumnContents: {
+      /* Add components here for a two-column form */
+      
+    },
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Submit&quot;,
+          style: &quot;PRIMARY&quot;,
+          saveInto: if(local!choice = -1, a!save(ri!question_txt,ri!faq_cdt.question_txt),{})
+        )
+      },
+      secondaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Cancel&quot;,
+          style: &quot;NORMAL&quot;,
+          value: &quot;Cancel&quot;,
+          saveInto : ri!cancelBtn,
+          skipValidation: true
+        )
+      }
+    ),
+    validations: {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>questionNumber_int</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>question_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>faq_cdt</name>
+            <type>
+                <name>Faq_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancelBtn</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="xsd:int"/>
+                    <a:nameRef>questionNumber_int</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>question_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Faq_CC"/>
+                    <a:nameRef>faq_cdt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>cancelBtn</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>
