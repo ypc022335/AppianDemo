@@ -9,7 +9,7 @@ Database Driver: MySQL Connector Java mysql-connector-java-5.1.38 ( Revision: fe
 
 /* UPDATE DDL */
 /* DROP AND CREATE DDL */
-/* WARNING: The DDL commented out below will drop and re-create all tables.
+/* WARNING: The DDL commented out below will drop and re-create all tables.*/
     alter table `issuecc` 
         drop 
         foreign key issuecc_constituentinfo;
@@ -21,7 +21,7 @@ Database Driver: MySQL Connector Java mysql-connector-java-5.1.38 ( Revision: fe
     drop table if exists `faqcc`;
 
     drop table if exists `issuecc`;
-*/
+
     create table `agencycc` (
         `email` varchar(255) not null,
         `name` varchar(255),

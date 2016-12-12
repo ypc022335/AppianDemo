@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Constituent" a:uuid="a12c0a0b-2e92-4af5-ab78-9ce604dde63c">
+        <a:pluralName>Constituents</a:pluralName>
+        <a:description>Shows list of constituents in the state.</a:description>
+        <a:urlStub>-7NNPw</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="f8d0ddf7-cdbe-420f-9575-8bcca7817f9f@_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5488"/>
+        <a:listViewTemplateExpr>#&quot;SYSTEM_SYSRULES_recordGridLayoutColumns&quot;(
+  emptygridmessage: &quot;There is no data available.&quot;,
+  columns: {
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;SSN&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_integerField&quot;(
+        displayvalue: rf!constituentSSN
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Name&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!firstName&amp;&quot; &quot;&amp;rf!lastName
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Email&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!email
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Phone&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_textField&quot;(
+        displayvalue: rf!phoneNo
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+    field: &quot;constituentSSN&quot;,
+    ascending: fn!true()
+  )
+)</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr></a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>district</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>user(fn!loggedInUser(),&quot;city&quot;)</a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultFilter>
+            <a:field>district</a:field>
+            <a:operator>not null</a:operator>
+            <a:valueExpression></a:valueExpression>
+        </a:defaultFilter>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:titleExpr></a:titleExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:layoutType>GRID</a:layoutType>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users>
+                <userUuid>ShrutiK</userUuid>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role name="record_type_viewer">
+            <users/>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_70</groupUuid>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

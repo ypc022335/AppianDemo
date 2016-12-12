@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:include schemaLocation="%7Burn%3Acom%3Aappian%3Atypes%7DConstituent_CC.xsd"/>
+  <xsd:complexType name="Issue_CC">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[Contains all the details of issue]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="issueID" nillable="true" type="xsd:int">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id @GeneratedValue</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="issueDate" nillable="true" type="xsd:date"/>
+      <xsd:element name="communicationMethod" nillable="true" type="xsd:string"/>
+      <xsd:element name="federalAgency" nillable="true" type="xsd:string"/>
+      <xsd:element name="constituentInfo" nillable="true" type="tns:Constituent_CC"/>
+      <xsd:element name="type" nillable="true" type="xsd:string"/>
+      <xsd:element name="status" nillable="true" type="xsd:string"/>
+      <xsd:element name="flag" nillable="true" type="xsd:int"/>
+      <xsd:element name="caseworker" nillable="true" type="xsd:string"/>
+      <xsd:element name="closureDate" nillable="true" type="xsd:date"/>
+      <xsd:element name="attachment" nillable="true" type="xsd:int"/>
+      <xsd:element name="summary" nillable="true" type="xsd:string"/>
+      <xsd:element name="monetaryAward" nillable="true" type="xsd:int"/>
+      <xsd:element name="responseLetter" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_handleIssue</name>
+        <uuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5378</uuid>
+        <description>Catherine ( Caseworker ) : Task to handle issues received from Leah ( LC )</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!awardCheckbox,
+  local!action,
+  local!template,
+  local!responseLetter,
+  local!id: ri!issue_CDT.issueID,
+  local!date: today(),
+  local!status,
+  ri!federalAgency: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5874&quot;(
+    ri!issue_CDT.federalAgency
+  ),
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(
+    label: &quot;&quot;,
+    instructions: &quot;&quot;,
+    firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        secondColumnContents:{
+          #&quot;SYSTEM_SYSRULES_imageField&quot;(
+            label: &quot;&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            images: {
+              #&quot;SYSTEM_SYSRULES_documentImage&quot;(
+                document: 6579
+              )
+            },
+            size: &quot;SMALL&quot;
+          )
+          
+        }
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Constituent Information&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(
+            label: &quot;SSN:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!issue_CDT.constituentInfo.constituentSSN,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Email:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!issue_CDT.constituentInfo.email,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          )
+        },
+        secondColumnContents: {}
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Issue Details&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(
+            label: &quot;Issued On:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!issue_CDT.issueDate,
+            saveInto: {},
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(
+            label: &quot;Issue ID:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!issue_CDT.issueID,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Summary:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!issue_CDT.summary,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            label: &quot;Transcript&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            helptooltip: &quot;Click on ID to download communication transcript&quot;,
+            links: {
+              if(
+                isnull(
+                  ri!issue_CDT.attachment
+                ),
+                {},
+                #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(
+                  label: &quot;Communication Attachment&quot;,
+                  Document: /*ri!issue_CDT.attachment*/
+                  todocument(
+                    (
+                      ri!issue_CDT.attachment + 1
+                    )
+                  )
+                )
+              )
+            }
+          )
+        },
+        secondColumnContents: {}
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Federal Agency Details&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Name:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!federalAgency.name,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Email:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!federalAgency.email,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;Phone:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            value: ri!federalAgency.phone,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          )
+        },
+        secondColumnContents: {}
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Update/Respond to Issue&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+            label: &quot;Status:&quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            choiceLabels: {
+              
+              &quot;Pending&quot;,
+              &quot;Closed&quot;
+            },
+            choiceValues: {
+             
+              &quot;Pending&quot;,
+              &quot;Closed&quot;
+            },
+            saveInto: local!status,
+            value: local!status,
+            choiceLayout: &quot;COMPACT&quot;,
+            required: true,
+            validations: {}
+          ),
+          #&quot;SYSTEM_SYSRULES_checkboxField&quot;(
+            label: &quot;Monetary Award, if any: &quot;,
+            labelPosition: &quot;ADJACENT&quot;,
+            choiceLabels: {
+              &quot;&quot;
+            },
+            choiceValues: {
+              1
+            },
+            value: local!awardCheckbox,
+            saveInto: local!awardCheckbox,
+            validations: {}
+          ),
+          if(
+            local!awardCheckbox = &quot;1&quot;,
+            #&quot;SYSTEM_SYSRULES_integerField&quot;(
+              label: &quot;Amount (in $):&quot;,
+              labelPosition: &quot;ADJACENT&quot;,
+              value: ri!issue_CDT.monetaryAward,
+              saveInto: ri!issue_CDT.monetaryAward,
+              refreshAfter: &quot;UNFOCUS&quot;,
+              validations: {}
+            ),
+            {}
+          )
+        },
+        secondColumnContents: {
+          if(
+            local!status = &quot;Closed&quot;,
+            #&quot;SYSTEM_SYSRULES_dateField&quot;(
+              label: &quot;Closed On:&quot;,
+              value: ri!issue_CDT.closureDate,
+              saveInto: ri!issue_CDT.closureDate,/*readOnly: true()*/
+              required: true,
+              validations:if(
+              ri!issue_CDT.issueDate &gt; ri!issue_CDT.closureDate,
+              &quot;Closure date cannot be before issue date.&quot;,
+              {}
+            ),
+            validationGroup: &quot;Submit&quot;
+            ),
+            {}
+          ),
+          #&quot;SYSTEM_SYSRULES_textField&quot;(
+            label: &quot;&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            saveInto: {},
+            refreshAfter: &quot;UNFOCUS&quot;,
+            readonly: true,
+            validations: {}
+          )
+        }
+      ),
+      #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+        primaryButtons: {
+          #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+            label: &quot;Template&quot;,
+            style: &quot;NORMAL&quot;,
+            value: &quot;Template&quot;,
+            saveInto: local!action
+          ),
+          #&quot;SYSTEM_SYSRULES_ButtonWidget&quot;(
+            label: &quot;New Letter&quot;,
+            style: &quot;NORMAL&quot;,
+            value: &quot;New Letter&quot;,
+            saveInto: local!action
+          )
+        },
+        secondaryButtons: {}
+      ),
+      if(
+        local!action = &quot;Template&quot;,
+        #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(
+          label: &quot;Select Issue Type&quot;,
+          labelPosition: &quot;ABOVE&quot;,
+          choiceLabels: {
+            &quot;Grievance&quot;,
+            &quot;Complaint&quot;,
+            &quot;Request&quot;,
+            &quot;Demand&quot;,
+            &quot;Application&quot;
+          },
+          choiceValues: {
+            &quot;Grievance&quot;,
+            &quot;Complaint&quot;,
+            &quot;Request&quot;,
+            &quot;Demand&quot;,
+            &quot;Application&quot;
+          },
+          saveInto: local!template,
+          value: local!template,
+          choiceLayout: &quot;STACKED&quot;,
+          validations: {}
+        ),
+        if(
+          local!action = &quot;New Letter&quot;,
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+            label: &quot;Type New Letter Here&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            value: local!responseLetter,
+            saveInto: local!responseLetter,
+            refreshAfter: &quot;UNFOCUS&quot;,
+            height: &quot;MEDIUM&quot;,
+            validations: {}
+          ),
+          {}
+        )
+      ),
+      if(
+        and(local!template = &quot;Grievance&quot;,local!action &lt;&gt; &quot;New Letter&quot;),
+        #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+          label: &quot;Template 1&quot;,
+          labelPosition: &quot;ABOVE&quot;,
+          value: local!template,
+          saveInto: local!responseLetter,
+          refreshAfter: &quot;UNFOCUS&quot;,
+          height: &quot;MEDIUM&quot;,
+          validations: {}
+        ),
+        if(
+          and(local!template = &quot;Complaint&quot;,local!action &lt;&gt; &quot;New Letter&quot;),
+          #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+            label: &quot;Template 2&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            value: local!template,
+            saveInto: local!responseLetter,
+            refreshAfter: &quot;UNFOCUS&quot;,
+            height: &quot;MEDIUM&quot;,
+            validations: {}
+          ),
+          if(
+            and(local!template = &quot;Request&quot;,local!action &lt;&gt; &quot;New Letter&quot;),
+            #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+              label: &quot;Template 3&quot;,
+              labelPosition: &quot;ABOVE&quot;,
+              value: local!template,
+              saveInto: local!responseLetter,
+              refreshAfter: &quot;UNFOCUS&quot;,
+              height: &quot;MEDIUM&quot;,
+              validations: {}
+            ),
+            if(
+              and(local!template = &quot;Demand&quot;,local!action &lt;&gt; &quot;New Letter&quot;),
+              #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+                label: &quot;Template 4&quot;,
+                labelPosition: &quot;ABOVE&quot;,
+                value: local!template,
+                saveInto: local!responseLetter,
+                refreshAfter: &quot;UNFOCUS&quot;,
+                height: &quot;MEDIUM&quot;,
+                validations: {}
+              ),
+              if(
+                and(local!template = &quot;Application&quot;,local!action &lt;&gt; &quot;New Letter&quot;),
+                #&quot;SYSTEM_SYSRULES_paragraphField&quot;(
+                  label: &quot;Template 5&quot;,
+                  labelPosition: &quot;ABOVE&quot;,
+                  value: local!template,
+                  saveInto: local!responseLetter,
+                  refreshAfter: &quot;UNFOCUS&quot;,
+                  height: &quot;MEDIUM&quot;,
+                  validations: {}
+                ),
+                
+                  {}
+                
+              )
+            )
+          )
+        )
+      )
+    },
+    secondColumnContents: {
+      /* Add components here for a two-column form */
+      
+    },
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(
+      primaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Submit&quot;,
+          style: &quot;PRIMARY&quot;,
+          saveInto: {
+            if(
+              local!status = &quot;Closed&quot;,
+              a!save(
+                ri!issue_CDT.flag,
+                0
+              ),
+              a!save(
+                ri!issue_CDT.flag,
+                1
+              )
+            ),
+            if(or(isnull(local!template),local!action = &quot;New Letter&quot;),a!save(
+              ri!issue_CDT.responseLetter,
+              local!responseLetter
+            ),a!save(
+              ri!issue_CDT.responseLetter,
+              local!template
+            )),
+            a!save(
+              ri!mailDecision_txt,
+              local!action
+            ),
+            a!save(
+              ri!issue_CDT.status, local!status
+            )
+          },
+          validationGroup: &quot;Submit&quot;
+        )
+      },
+      secondaryButtons: {
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(
+          label: &quot;Cancel&quot;,
+          style: &quot;NORMAL&quot;,
+          value: &quot;Cancel&quot;,
+          saveInto:ri!cancelBtn,
+          skipValidation: true
+        )
+      }
+    ),
+    validations: {}
+  )
+)</definition>
+        <namedTypedValue>
+            <name>federalAgency</name>
+            <type>
+                <name>Agency_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>issue_CDT</name>
+            <type>
+                <name>Issue_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>mailDecision_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>cancelBtn</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Agency_CC"/>
+                    <a:nameRef>federalAgency</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Issue_CC"/>
+                    <a:nameRef>issue_CDT</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>mailDecision_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>cancelBtn</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <queryRule>
+        <name>fetchFaqWithId_CC</name>
+        <uuid>_a-0000ddce-5ecb-8000-aae2-01ef9001ef90_7400</uuid>
+        <description>To fetch the answers of the question selected from data store.</description>
+        <folderUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5376</folderUuid>
+        <dataStoreEntityCompositeUuid>830cb7b7-6f0b-40e2-b121-0fd3b95f97e7@_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5488</dataStoreEntityCompositeUuid>
+        <params>
+            <param>
+                <description></description>
+                <name>faqId</name>
+                <type>{http://www.w3.org/2001/XMLSchema}int</type>
+            </param>
+        </params>
+        <filters>
+            <filter>
+                <field>
+                    <name>faqId_int</name>
+                    <type>{http://www.w3.org/2001/XMLSchema}int</type>
+                </field>
+                <op>=</op>
+                <value>faqId</value>
+                <valueType>PARAMETER</valueType>
+            </filter>
+        </filters>
+        <orderings/>
+    </queryRule>
+    <roleMap public="false">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

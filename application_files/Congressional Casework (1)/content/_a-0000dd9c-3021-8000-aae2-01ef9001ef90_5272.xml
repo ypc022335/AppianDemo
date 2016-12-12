@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <communityKnowledgeCenter>
+        <name>Shruti_KC</name>
+        <uuid>_a-0000dd9c-3021-8000-aae2-01ef9001ef90_5272</uuid>
+        <description>Knowledge center created to save reports.</description>
+        <parentUuid>SYSTEM_COMMUNITY_ROOT</parentUuid>
+        <visibility>
+            <advertise>true</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <expirationDays>0</expirationDays>
+    </communityKnowledgeCenter>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="false" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users>
+                <userUuid>adam_gilchrist</userUuid>
+            </users>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_70</groupUuid>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+                <groupUuid>_e-0000ddc6-867d-8000-aae2-011e94011e94_98</groupUuid>
+                <groupUuid>_e-0000ddc6-867d-8000-aae2-011e94011e94_96</groupUuid>
+            </groups>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

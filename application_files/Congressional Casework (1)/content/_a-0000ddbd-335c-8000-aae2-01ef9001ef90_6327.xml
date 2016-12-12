@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>IssueAnalysis</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6327</uuid>
+        <description></description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(
+  local!duration : networkdays(2016-10-10,2016-10-5) ,
+  local!pagingInfo: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+    startIndex: 1,
+    batchSize: 20,
+    sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+      field: &quot;issueID&quot;,
+      ascending: true
+    )
+  ),
+  with(
+    local!datasubset: queryrecord(
+      #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+      #&quot;SYSTEM_SYSRULES_query&quot;(
+        selection: #&quot;SYSTEM_SYSRULES_querySelection&quot;(columns: {
+          #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;issueID&quot;),
+          #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;issueDate&quot;),
+          #&quot;SYSTEM_SYSRULES_queryColumn&quot;(field: &quot;closureDate&quot;),
+        }),
+        pagingInfo: local!pagingInfo
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridField&quot;(
+      totalCount: local!datasubset.totalCount,
+      columns: {
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;issueID&quot;,
+          field: &quot;issueID&quot;,
+          data: index(local!datasubset.data, &quot;issueID&quot;, null),
+          links: apply(
+            #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+              label: &quot;Go to record view&quot;,
+              recordType: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              identifier: _,
+              dashboard: &quot;summary&quot;
+            ),
+            local!datasubset.identifiers
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;issueDate&quot;,
+          field: &quot;issueDate&quot;,
+          data: index(local!datasubset.data, &quot;issueDate&quot;, null),
+          links: apply(
+            #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+              label: &quot;Go to record view&quot;,
+              recordType: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              identifier: _,
+              dashboard: &quot;summary&quot;
+            ),
+            local!datasubset.identifiers
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;closureDate&quot;,
+          field: &quot;closureDate&quot;,
+          data: index(local!datasubset.data, &quot;closureDate&quot;, null),
+          links: apply(
+            #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+              label: &quot;Go to record view&quot;,
+              recordType: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              identifier: _,
+              dashboard: &quot;summary&quot;
+            ),
+            local!datasubset.identifiers
+          )
+        ),
+        #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(
+          label: &quot;Duration&quot;,
+          field: &quot;issueDate&quot;,
+          data: networkdays(index(local!datasubset.data, &quot;issueDate&quot;, null),index(local!datasubset.data, &quot;closureDate&quot;, null))/*index(local!datasubset.data, &quot;issueDate&quot;, null)*/,
+          links: apply(
+            #&quot;SYSTEM_SYSRULES_recordLink&quot;(
+              label: &quot;Go to record view&quot;,
+              recordType: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6329&quot;,
+              identifier: _,
+              dashboard: &quot;summary&quot;
+            ),
+            local!datasubset.identifiers
+          )
+        )
+      },
+      value: local!pagingInfo,
+      saveInto: local!pagingInfo
+    )
+  )
+)
+</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

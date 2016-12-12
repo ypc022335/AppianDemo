@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="urn:com:appian:types"
+  xmlns:tns="urn:com:appian:types" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:complexType name="Caseworker_CC">
+    <xsd:annotation>
+      <xsd:documentation><![CDATA[information of caseworker]]></xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="userName" nillable="true" type="xsd:string">
+        <xsd:annotation>
+          <xsd:appinfo source="appian.jpa">@Id</xsd:appinfo>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="district" nillable="true" type="xsd:string"/>
+      <xsd:element name="state" nillable="true" type="xsd:string"/>
+      <xsd:element name="firstName" nillable="true" type="xsd:string"/>
+      <xsd:element name="lastName" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recordTypeHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <recordType name="Issue Analysis" a:uuid="17d78300-5e9a-4f29-a9d8-a2ee3aa8b667">
+        <a:pluralName>Issue Analysis</a:pluralName>
+        <a:description>Issue Analysis</a:description>
+        <a:urlStub>XaTqGw</a:urlStub>
+        <a:source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="a:DataStoreEntity" a:uuid="3441a47c-0768-435a-b37d-39e305a2b7b6@_a-0000ddba-c96a-8000-aae2-01ef9001ef90_5488"/>
+        <a:listViewTemplateExpr>#&quot;SYSTEM_SYSRULES_recordGridLayoutColumns&quot;(
+  columns: {
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Issue ID&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_integerField&quot;(
+        displayvalue: rf!issueID
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Start Date&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_dateField&quot;(
+        displayvalue: rf!issueDate
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Close Date&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_dateField&quot;(
+        displayvalue: rf!closureDate
+      )
+    ),
+    #&quot;SYSTEM_SYSRULES_gridLayoutColumn&quot;(
+      label: &quot;Duration&quot;,
+      width: &quot;DISTRIBUTE&quot;,
+      component: #&quot;SYSTEM_SYSRULES_recordGrid_integerField&quot;(
+        displayvalue: networkdays(rf!issueDate, rf!closureDate)
+      )
+    )
+  },
+  pageSize: 50,
+  defaultSort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(
+    ascending: fn!true()
+  )
+)</a:listViewTemplateExpr>
+        <a:detailViewCfg>
+            <a:nameExpr>=&quot;Summary&quot;</a:nameExpr>
+            <a:uiExpr></a:uiExpr>
+            <a:visibilityExpr>=true()</a:visibilityExpr>
+            <a:urlStub>summary</a:urlStub>
+            <a:headerExpr></a:headerExpr>
+        </a:detailViewCfg>
+        <a:defaultFilter>
+            <a:field>closureDate</a:field>
+            <a:operator>not null</a:operator>
+            <a:valueExpression></a:valueExpression>
+        </a:defaultFilter>
+        <a:defaultFilter>
+            <a:field>constituentInfo.district</a:field>
+            <a:operator>=</a:operator>
+            <a:valueExpression>user(fn!loggedInUser(),&quot;city&quot;)</a:valueExpression>
+        </a:defaultFilter>
+        <a:isSystem>false</a:isSystem>
+        <a:dataSrcExpr></a:dataSrcExpr>
+        <a:facetsListExpr></a:facetsListExpr>
+        <a:titleExpr></a:titleExpr>
+        <a:defaultFiltersExpr></a:defaultFiltersExpr>
+        <a:layoutType>GRID</a:layoutType>
+        <a:security>16383</a:security>
+    </recordType>
+    <roleMap>
+        <role name="record_type_administrator">
+            <users>
+                <userUuid>ShrutiK</userUuid>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups/>
+        </role>
+        <role name="record_type_viewer">
+            <users>
+                <userUuid>YogeshC</userUuid>
+            </users>
+            <groups>
+                <groupUuid>_e-0000ddba-c186-8000-aae2-011e94011e94_78</groupUuid>
+            </groups>
+        </role>
+    </roleMap>
+</recordTypeHaul>

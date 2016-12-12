@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>filterFlag</name>
+        <uuid>_a-0000ddcb-bc90-8000-aae2-01ef9001ef90_6957</uuid>
+        <description>Set count 0 if flag =0 else return count</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5371</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>#&quot;SYSTEM_SYSRULES_queryEntity&quot;(
+  entity:#&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6260&quot;,
+  query:#&quot;SYSTEM_SYSRULES_query&quot;(
+    selection:#&quot;SYSTEM_SYSRULES_querySelection&quot;(
+      columns:{
+        #&quot;SYSTEM_SYSRULES_queryColumn&quot;(
+        field:&quot;flag&quot;
+        )
+      }
+    ),
+    logicalExpression:#&quot;SYSTEM_SYSRULES_queryLogicalExpression&quot;(
+      operator:&quot;AND&quot;,
+      filters:{
+        #&quot;SYSTEM_SYSRULES_queryFilter&quot;(
+          field:&quot;flag&quot;,
+          operator:&quot;=&quot;,
+          value:if(isnull(ri!flag),&quot;&quot;,ri!flag)
+        ),
+        #&quot;SYSTEM_SYSRULES_queryFilter&quot;(
+          field:&quot;caseworker&quot;,
+          operator:&quot;=&quot;,
+          value:if(isnull(ri!caseworker),&quot;&quot;,ri!caseworker)
+        )
+      }
+      
+    ),
+    pagingInfo:#&quot;SYSTEM_SYSRULES_pagingInfo&quot;(
+      startIndex:1,
+      batchSize:-1
+    )
+  )
+)</definition>
+        <namedTypedValue>
+            <name>caseworker</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>flag</name>
+            <type>
+                <name>int</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>legacy</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

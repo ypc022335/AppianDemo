@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>reportInterface</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6907</uuid>
+        <description>Sample</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5376</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>=load(
+  local!departments: {&quot;HR&quot;, &quot;Marketing&quot;, &quot;Sales&quot;, &quot;IT&quot;},
+  #&quot;SYSTEM_SYSRULES_dashboardLayout&quot;(
+    firstColumnContents: {
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+            label: &quot;Spending vs. Budget&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            categories: local!departments,
+            series: {
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Budget&quot;, data: {7000, 12000, 10000, 10000}),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Spent&quot;, data: {3500, 9000, 10500, 8000})
+            },
+            xAxisTitle: &quot;Department&quot;,
+            yAxisTitle: &quot;Amount ($)&quot;,
+            stacking: &quot;NONE&quot;,
+            showLegend: true,
+            showTooltips: true
+          ),
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+              label: &quot;Show as Grid&quot;,
+              /* The saveInto parameter must be configured in order to save a value */
+              saveInto: {}
+            ),
+            align: &quot;CENTER&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_pieChartField&quot;(
+            label: &quot;Spending by Department&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            series: {
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;HR&quot;, data: 3500),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Marketing&quot;, data: 9000),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Sales&quot;, data: 10500),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;IT&quot;, data: 8000)
+            },
+            showDataLabels: true,
+            showAsPercentage: true
+          ),
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+              label: &quot;Show as Grid&quot;,
+              saveInto: {}
+            ),
+            align: &quot;CENTER&quot;
+          )
+        },
+        secondColumnContents: {
+          #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+            label: &quot;Remaining&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            categories: local!departments,
+            series: {
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Remaining&quot;, data: {3500, 3000, -500, 2000})
+            },
+            xAxisTitle: &quot;Department&quot;,
+            yAxisTitle: &quot;Amount ($)&quot;,
+            stacking: &quot;NONE&quot;,
+            showLegend: false,
+            showTooltips: true
+          ),
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+              label: &quot;Show as Grid&quot;,
+              saveInto: {}
+            ),
+            align: &quot;CENTER&quot;
+          ),
+          #&quot;SYSTEM_SYSRULES_columnChartField&quot;(
+            label: &quot;Spending by Category&quot;,
+            labelPosition: &quot;ABOVE&quot;,
+            categories: local!departments,
+            series: {
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Hardware&quot;, data: {0, 2000, 2000, 6000}),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Software&quot;, data: {0, 1000, 500, 1500}),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Travel&quot;, data: {0, 3000, 4000, 0}),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Recruiting&quot;, data: {1000, 0, 0, 0}),
+              #&quot;SYSTEM_SYSRULES_chartSeries&quot;(label: &quot;Miscellaneous&quot;, data: {1500, 3000, 1500, 500})
+            },
+            xAxisTitle: &quot;Department&quot;,
+            yAxisTitle: &quot;Total Purchase Requests&quot;,
+            stacking: &quot;NORMAL&quot;,
+            showLegend: true,
+            showTooltips: true
+          ),
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            links: #&quot;SYSTEM_SYSRULES_dynamicLink&quot;(
+              label: &quot;Show as Grid&quot;,
+              saveInto: {}
+            ),
+            align: &quot;CENTER&quot;
+          )
+        }
+      ),
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(
+        label: &quot;Purchase Requests&quot;,
+        firstColumnContents: {
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            placeholderLabel: &quot;All Departments&quot;,
+            choiceLabels: local!departments,
+            choiceValues: local!departments,
+            /* The saveInto parameter must be configured to save a value */
+            saveInto: {},
+            validations: {}
+          )
+        },
+        secondColumnContents: {
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(
+            labelPosition: &quot;COLLAPSED&quot;,
+            choiceLabels: {&quot;Last 7 Days&quot;, &quot;Last 30 Days&quot;, &quot;Last 365 Days&quot;},
+            choiceValues: {&quot;Last 7 Days&quot;, &quot;Last 30 Days&quot;, &quot;Last 365 Days&quot;},
+            value: &quot;Last 7 Days&quot;,
+            saveInto: {},
+            validations: {}
+          )
+        }
+      ),
+      /* This grid is not configured to page and sort */
+      #&quot;SYSTEM_SYSRULES_gridField&quot;(
+        labelPosition: &quot;COLLAPSED&quot;,
+        totalCount: 20,
+        columns: {
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;PR #&quot;, data: {&quot;123456789&quot;, &quot;123456801&quot;, &quot;123456795&quot;, &quot;123456782&quot;, &quot;123456790&quot;, &quot;123456791&quot;, &quot;123456779&quot;, &quot;123456782&quot;, &quot;123456784&quot;, &quot;123456787&quot;}),
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Department&quot;, data: {&quot;Sales&quot;, &quot;Sales&quot;, &quot;Marketing&quot;, &quot;IT&quot;, &quot;Sales&quot;, &quot;Marketing&quot;, &quot;IT&quot;, &quot;Sales&quot;, &quot;IT&quot;, &quot;HR&quot;}),
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Requested By&quot;, data: {&quot;Paul Smith&quot;, &quot;Michael Johnson&quot;, &quot;Daniel Lewis&quot;, &quot;Stephen Edwards&quot;, &quot;John Smith&quot;, &quot;Scott Bailey&quot;, &quot;Michael Johnson&quot;, &quot;Michelle Foster&quot;, &quot;Laura Bryant&quot;, &quot;John Smith&quot;}),
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Requested On&quot;, data: {today()-7, today()-3, today()-5, today()-4, today()-4, today()-7, today()-2, today()-1, today()-6, today()}),
+          #&quot;SYSTEM_SYSRULES_gridTextColumn&quot;(label: &quot;Total Amount&quot;, field: &quot;total&quot;, data: {&quot;$499.99&quot;, &quot;$301.50&quot;, &quot;$209.99&quot;, &quot;$179.49&quot;, &quot;$99.89&quot;, &quot;$90.27&quot;, &quot;$89.01&quot;, &quot;$50.98&quot;, &quot;$48.97&quot;, &quot;$19.99&quot;}, alignment: &quot;RIGHT&quot;),
+          #&quot;SYSTEM_SYSRULES_gridImageColumn&quot;(label: &quot;Approved&quot;, data: {
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_NOTDONE&quot;), altText: &quot;Rejected icon&quot;, caption: &quot;Rejected&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_NOTDONE&quot;), altText: &quot;Rejected icon&quot;, caption: &quot;Rejected&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;),
+            #&quot;SYSTEM_SYSRULES_documentImage&quot;(document: #&quot;SYSTEM_SYSRULES_iconIndicator&quot;(&quot;STATUS_OK&quot;), altText: &quot;Approved icon&quot;, caption: &quot;Approved&quot;)
+          }, size: &quot;ICON&quot;)
+        },
+        value: #&quot;SYSTEM_SYSRULES_pagingInfo&quot;(startIndex: 1, batchSize: 10, sort: #&quot;SYSTEM_SYSRULES_sortInfo&quot;(field: &quot;total&quot;, ascending: false))
+      )
+    },
+    secondColumnContents: {}
+  )
+)</definition>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+</contentHaul>

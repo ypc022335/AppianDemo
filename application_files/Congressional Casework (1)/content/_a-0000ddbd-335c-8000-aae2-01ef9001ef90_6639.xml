@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_updateStatus</name>
+        <uuid>_a-0000ddbd-335c-8000-aae2-01ef9001ef90_6639</uuid>
+        <description>update status and work on issue</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5372</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!awardCheckbox,&#xD;
+  local!action,&#xD;
+  local!id: ri!issue_CDT.issueID,&#xD;
+  local!date:today(),&#xD;
+  ri!federalAgency: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5874&quot;(&#xD;
+    ri!issue_CDT.federalAgency&#xD;
+  ),&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Hi Caseworker &quot; &amp; ri!issue_CDT.caseworker,&#xD;
+    instructions: &quot;Please respond to this issue appropriately&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Constituent Information&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(&#xD;
+            label: &quot;SSN:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.constituentInfo.constituentSSN,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.constituentInfo.email,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Issue Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+            label: &quot;Issued On:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.issueDate,&#xD;
+            saveInto: {},&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(&#xD;
+            label: &quot;Issue ID:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.issueID,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Summary:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue_CDT.summary,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_linkField&quot;(&#xD;
+            label: &quot;Transcript&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            helptooltip: &quot;Click on ID to download communication transcript&quot;,&#xD;
+            links: {&#xD;
+              if(isnull(ri!issue_CDT.attachment),{},&#xD;
+              #&quot;SYSTEM_SYSRULES_documentDownloadLink&quot;(&#xD;
+                label: &quot;issue ID&quot;,&#xD;
+                Document: /*ri!issue_CDT.attachment*/&#xD;
+                todocument((ri!issue_CDT.attachment+1))&#xD;
+              )&#xD;
+              )&#xD;
+            }&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Federal Agency Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Name:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.name,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.email,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Phone:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!federalAgency.phone,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {}&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Update/Respond to Issue&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+            label: &quot;Status:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              &quot;New&quot;,&#xD;
+              &quot;Pending&quot;,&#xD;
+              &quot;Closed&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              &quot;New&quot;,&#xD;
+              &quot;Pending&quot;,&#xD;
+              &quot;Closed&quot;&#xD;
+            },&#xD;
+            value: ri!issue_CDT.status,&#xD;
+            saveInto: ri!issue_CDT.status,&#xD;
+            required: true,&#xD;
+            choiceLayout: &quot;COMPACT&quot;,&#xD;
+            validations: {}&#xD;
+          ),&#xD;
+          &#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Flag (Priority):&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            placeholderLabel: &quot;Select Priority&quot;,&#xD;
+            choiceLabels: {&#xD;
+              &quot;&quot;,&#xD;
+              &quot;Low&quot;,&#xD;
+              &quot;Medium&quot;,&#xD;
+              &quot;High&quot;,&#xD;
+              &quot;Immediate&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              0,&#xD;
+              1,&#xD;
+              2,&#xD;
+              3,&#xD;
+              4&#xD;
+            },&#xD;
+            value: ri!issue_CDT.flag,&#xD;
+            saveInto: ri!issue_CDT.flag,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        },&#xD;
+        secondColumnContents: {&#xD;
+          if(ri!issue_CDT.status = &quot;Closed&quot;, #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+            label: &quot;Closed On:&quot;,&#xD;
+            value: ri!issue_CDT.closureDate,&#xD;
+            saveInto: ri!issue_CDT.closureDate,&#xD;
+            validations: if(&#xD;
+              ri!issue_CDT.issueDate &gt; ri!issue_CDT.closureDate,&#xD;
+              &quot;Closure date cannot be before issue date.&quot;,&#xD;
+              {}&#xD;
+            ),&#xD;
+            validationGroup: &quot;Submit&quot;&#xD;
+            /*readOnly: true()*/&#xD;
+          ), {} ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;&quot;,&#xD;
+            labelPosition: &quot;ABOVE&quot;,&#xD;
+            saveInto: {},&#xD;
+            refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+            readonly: true,&#xD;
+            validations: {}&#xD;
+          )&#xD;
+        }&#xD;
+      )&#xD;
+      &#xD;
+    },&#xD;
+    buttons: #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+      primaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Submit&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          saveInto: {if(&#xD;
+            ri!issue_CDT.status = &quot;Closed&quot;,&#xD;
+            a!save(ri!issue_CDT.flag,0), {})},&#xD;
+            validationGroup: &quot;Submit&quot;&#xD;
+        )&#xD;
+      },&#xD;
+      secondaryButtons: {&#xD;
+        #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Cancel&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          value: true,&#xD;
+          skipValidation: true&#xD;
+        ), &#xD;
+        if(ri!issue_CDT.status = &quot;Closed&quot;,#&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Send Email&quot;,&#xD;
+          style: &quot;NORMAL&quot;,&#xD;
+          value: &quot;email&quot;,&#xD;
+          saveInto:ri!submit_txt,&#xD;
+          skipValidation: true&#xD;
+        ), &#xD;
+        {}&#xD;
+        )&#xD;
+      }&#xD;
+    ),&#xD;
+    validations: {}&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>federalAgency</name>
+            <type>
+                <name>Agency_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>issue_CDT</name>
+            <type>
+                <name>Issue_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>submit_txt</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Agency_CC"/>
+                    <a:nameRef>federalAgency</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Issue_CC"/>
+                    <a:nameRef>issue_CDT</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>submit_txt</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>

@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<contentHaul xmlns:a="http://www.appian.com/ae/types/2009">
+    <rule>
+        <name>CC_AddNewIssue</name>
+        <uuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5373</uuid>
+        <description>The legislative correspondent can create a new issue that needs help of caseworker</description>
+        <parentUuid>_a-0000ddba-c186-8000-aae2-01ef9001ef90_5372</parentUuid>
+        <visibility>
+            <advertise>false</advertise>
+            <hierarchy>true</hierarchy>
+            <indexable>true</indexable>
+            <quota>false</quota>
+            <searchable>true</searchable>
+            <system>false</system>
+            <unlogged>false</unlogged>
+        </visibility>
+        <definition>load(&#xD;
+  local!initialGroup: &quot;Districts&quot;,&#xD;
+  local!pathValue,&#xD;
+  local!selectionValue,&#xD;
+  local!navigationPath,&#xD;
+  #&quot;SYSTEM_SYSRULES_formLayout&quot;(&#xD;
+    label: &quot;Register New Issue&quot;,&#xD;
+    firstColumnContents: {&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;General Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_dateField&quot;(&#xD;
+            label: &quot;Date : &quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue.issueDate,&#xD;
+            saveInto: /*if(ri!issue.issueDate &gt; today() , {} ,ri!issue.issueDate)*/ri!issue.issueDate,&#xD;
+            required: true,&#xD;
+            requiredMessage: &quot;Please select the date&quot;,&#xD;
+            align: &quot;LEFT&quot;/*validations:if(ri!issue.issueDate &gt; today() , &quot;Enter Valid Date&quot;,{}),&#xD;
+            validationGroup : &quot;Submit*/&#xD;
+            &#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Summary :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue.summary,&#xD;
+            saveInto: ri!issue.summary,&#xD;
+            required: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Issue ID :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue.issueID,&#xD;
+            saveInto: ri!issue.issueID,&#xD;
+            required: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          )&#xD;
+        },&#xD;
+        secondcolumncontents: #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;&quot;,&#xD;
+          labelPosition: &quot;ABOVE&quot;,&#xD;
+          saveInto: {},&#xD;
+          refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+          readonly: true,&#xD;
+          masked: false,&#xD;
+          validations: {}&#xD;
+        )&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Constituent Details &quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_integerField&quot;(&#xD;
+            label: &quot;SSN :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: ri!issue.constituentInfo.constituentSSN,&#xD;
+            saveInto: ri!issue.constituentInfo.constituentSSN,&#xD;
+            required: true,&#xD;
+            validations: {&#xD;
+              if(&#xD;
+                len(&#xD;
+                  ri!issue.constituentInfo.constituentSSN&#xD;
+                ) = 9,&#xD;
+                &quot;&quot;,&#xD;
+                &quot;Invalid SSN: Length should be 9 digits&quot;&#xD;
+              )&#xD;
+            },&#xD;
+            align: &quot;LEFT&quot;,&#xD;
+            validationGroup: &quot;Submit&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;First Name :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(&#xD;
+            isnull(&#xD;
+              ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.firstName,&#xD;
+              if(&#xD;
+                isnull(&#xD;
+                  #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                    ri!issue.constituentInfo.constituentSSN&#xD;
+                  )),&#xD;
+                  ri!issue.constituentInfo.firstName,&#xD;
+                  #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                    ri!issue.constituentInfo.constituentSSN&#xD;
+                  ).firstName&#xD;
+                )&#xD;
+              )&#xD;
+            /*if(&#xD;
+              isnull(&#xD;
+                &#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              &#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.firstName,&#xD;
+              rule!getConstituentDetails(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).firstName&#xD;
+            )*/,&#xD;
+            saveInto: ri!issue.constituentInfo.firstName,&#xD;
+            required: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Last Name :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.lastName,&#xD;
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).lastName),&#xD;
+            saveInto: ri!issue.constituentInfo.lastName,&#xD;
+            required: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Email :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.email,&#xD;
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).email),&#xD;
+            saveInto: ri!issue.constituentInfo.email,&#xD;
+            required: true,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          )&#xD;
+        },&#xD;
+        secondcolumncontents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;Phone Number :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.phoneNo,&#xD;
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).phoneNo),&#xD;
+            saveInto: ri!issue.constituentInfo.phoneNo,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;State :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: &quot;California&quot;,&#xD;
+            saveInto: if(&#xD;
+              isnull(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.state,&#xD;
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).state),&#xD;
+            readOnly: true(),&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+            label: &quot;District :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            value: if(&#xD;
+              isnull(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ),&#xD;
+              ri!issue.constituentInfo.district,&#xD;
+              #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5889&quot;(&#xD;
+                ri!issue.constituentInfo.constituentSSN&#xD;
+              ).district),&#xD;
+            saveInto: ri!issue.constituentInfo.district,&#xD;
+            align: &quot;LEFT&quot;&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Issue Details&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+            label: &quot;Type of Issue: &quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              &quot;State&quot;,&#xD;
+              &quot;Federal&quot;,&#xD;
+              &quot;Local&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              &quot;State&quot;,&#xD;
+              &quot;Federal&quot;,&#xD;
+              &quot;Local&quot;&#xD;
+            },&#xD;
+            value: ri!issue.type,&#xD;
+            saveInto: ri!issue.type,&#xD;
+            required: true,&#xD;
+            choiceLayout: &quot;COMPACT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_dropdownField&quot;(&#xD;
+            label: &quot;Name of Agency:&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            placeholderLabel: &quot;Select the associated agency&quot;,&#xD;
+            choiceLabels: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5952&quot;(&#xD;
+              ri!issue.type&#xD;
+            ),&#xD;
+            choiceValues: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5961&quot;(&#xD;
+              ri!issue.type&#xD;
+            ),&#xD;
+            value: if(&#xD;
+              or(&#xD;
+                and(&#xD;
+                  ri!issue.type = &quot;State&quot;,&#xD;
+                  contains(&#xD;
+                    #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5924&quot;,&#xD;
+                    ri!issue.federalAgency&#xD;
+                  )&#xD;
+                ),&#xD;
+                and(&#xD;
+                  ri!issue.type = &quot;Federal&quot;,&#xD;
+                  contains(&#xD;
+                    #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5926&quot;,&#xD;
+                    ri!issue.federalAgency&#xD;
+                  )&#xD;
+                ),&#xD;
+                and(&#xD;
+                  ri!issue.type = &quot;Local&quot;,&#xD;
+                  contains(&#xD;
+                    #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5929&quot;,&#xD;
+                    ri!issue.federalAgency&#xD;
+                  )&#xD;
+                )&#xD;
+              ),&#xD;
+              ri!issue.federalAgency,&#xD;
+              null&#xD;
+            ),&#xD;
+            saveInto: ri!issue.federalAgency&#xD;
+          )&#xD;
+        },&#xD;
+        secondcolumncontents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_radioButtonField&quot;(&#xD;
+            label: &quot;Communication :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            choiceLabels: {&#xD;
+              &quot;Email&quot;,&#xD;
+              &quot;Call&quot;,&#xD;
+              &quot;Post&quot;&#xD;
+            },&#xD;
+            choiceValues: {&#xD;
+              &quot;Email&quot;,&#xD;
+              &quot;Call&quot;,&#xD;
+              &quot;Post&quot;&#xD;
+            },&#xD;
+            value: ri!issue.communicationMethod,&#xD;
+            saveInto: ri!issue.communicationMethod,&#xD;
+            required: true,&#xD;
+            choiceLayout: &quot;COMPACT&quot;&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_fileUploadField&quot;(&#xD;
+            label: &quot;Attachment :&quot;,&#xD;
+            labelPosition: &quot;ADJACENT&quot;,&#xD;
+            target: #&quot;_a-0000ddbd-335c-8000-aae2-01ef9001ef90_5772&quot;,&#xD;
+            /*value: ri!attachmentFile,*/&#xD;
+            saveInto: ri!issue.attachment&#xD;
+          )&#xD;
+        }&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_sectionLayout&quot;(&#xD;
+        label: &quot;Select a caseworker&quot;,&#xD;
+        firstColumnContents: {&#xD;
+          #&quot;SYSTEM_SYSRULES_pickerFieldGroups&quot;(&#xD;
+            label: &quot;Select a Group&quot;,&#xD;
+            maxSelections: 1,&#xD;
+            value: local!initialGroup,&#xD;
+            saveInto: {&#xD;
+              local!initialGroup,&#xD;
+              a!save(&#xD;
+                local!navigationPath,&#xD;
+                {}&#xD;
+              )&#xD;
+            }&#xD;
+          ),&#xD;
+          #&quot;SYSTEM_SYSRULES_userBrowserFieldColumns&quot;(&#xD;
+            label: &quot;Select a User&quot;,&#xD;
+            rootGroup: local!initialGroup,&#xD;
+            pathValue: local!navigationPath,&#xD;
+            pathSaveInto: local!navigationPath,&#xD;
+            selectionValue: local!selectionValue,&#xD;
+            selectionSaveInto: ri!issue.caseworker&#xD;
+          )&#xD;
+        },&#xD;
+        secondcolumncontents: #&quot;SYSTEM_SYSRULES_textField&quot;(&#xD;
+          label: &quot;&quot;,&#xD;
+          labelPosition: &quot;ABOVE&quot;,&#xD;
+          saveInto: {},&#xD;
+          refreshAfter: &quot;UNFOCUS&quot;,&#xD;
+          readonly: true,&#xD;
+          validations: {}&#xD;
+        )&#xD;
+      ),&#xD;
+      #&quot;SYSTEM_SYSRULES_ButtonLayout&quot;(&#xD;
+        primaryButtons: #&quot;SYSTEM_SYSRULES_ButtonWidgetSubmit&quot;(&#xD;
+          label: &quot;Submit&quot;,&#xD;
+          style: &quot;PRIMARY&quot;,&#xD;
+          value: &quot;submitIssue&quot;,&#xD;
+          saveInto: ri!submitIssue/* validationGroup : &quot;Submit&quot;*/&#xD;
+          &#xD;
+        )&#xD;
+      )&#xD;
+    }&#xD;
+  )&#xD;
+)</definition>
+        <namedTypedValue>
+            <name>issue</name>
+            <type>
+                <name>Issue_CC</name>
+                <namespace>urn:com:appian:types</namespace>
+            </type>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>submitIssue</name>
+            <type>
+                <name>string</name>
+                <namespace>http://www.w3.org/2001/XMLSchema</namespace>
+            </type>
+            <value/>
+        </namedTypedValue>
+        <namedTypedValue>
+            <name>file1</name>
+            <type>
+                <name>CollaborationDocument</name>
+                <namespace>http://www.appian.com/ae/types/2009</namespace>
+            </type>
+        </namedTypedValue>
+        <preferredEditor>interface</preferredEditor>
+        <offlineEnabled>false</offlineEnabled>
+    </rule>
+    <roleMap public="true">
+        <role allowForAll="false" inherit="true" name="readers">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="authors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="true" name="administrators">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyReaders">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAuthors">
+            <users/>
+            <groups/>
+        </role>
+        <role allowForAll="false" inherit="false" name="denyAdministrators">
+            <users/>
+            <groups/>
+        </role>
+    </roleMap>
+    <typedValue>
+        <type>
+            <name>RuleTestConfig?list</name>
+            <namespace>http://www.appian.com/ae/types/2009</namespace>
+        </type>
+        <value>
+            <el>
+                <a:name/>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:n1="urn:com:appian:types" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="n1:Issue_CC"/>
+                    <a:nameRef>issue</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="xsd:string"/>
+                    <a:nameRef>submitIssue</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:ruleInputTestConfigs>
+                    <a:value xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true" xsi:type="a:CollaborationDocument"/>
+                    <a:nameRef>file1</a:nameRef>
+                    <a:id/>
+                </a:ruleInputTestConfigs>
+                <a:assertions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:nil="true"/>
+            </el>
+        </value>
+    </typedValue>
+</contentHaul>
